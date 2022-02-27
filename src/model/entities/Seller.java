@@ -15,13 +15,17 @@ public class Seller implements Serializable {
 	private Double baseSalary;
 	private Department department;
 	
-	public Seller(Integer id, String name, String email, Date birthDate, Double baseSalary, Department department) {
+	public Seller(Integer id, String name, String email, Date birthDate, Double baseSalary) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.birthDate = birthDate;
 		this.baseSalary = baseSalary;
-		this.department = department;
+		//this.department = department;
+	}
+	
+	public Seller(String name) {
+		this.name = name;
 	}
 	
 	public Seller() {
@@ -92,10 +96,15 @@ public class Seller implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 
+	/*
 	@Override
 	public String toString() {
 		return "Seller [id=" + id + ", name=" + name + ", email=" + email + ", birthDate=" + birthDate + ", baseSalary="
 				+ baseSalary + "]";
 	}
-	
+	*/
+	@Override
+	public String toString(){
+		return "Name: " + name;
+	}
 }
