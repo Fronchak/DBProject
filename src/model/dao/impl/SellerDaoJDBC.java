@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import Db.DB;
@@ -45,8 +44,7 @@ public class SellerDaoJDBC implements SellerDao{
 		PreparedStatement ps = null;
 		
 		ResultSet rs = null;
-		
-		Seller seller = null;
+
 		try {
 			conn = DB.createConnection();
 			ps = conn.prepareStatement("SELECT S.ID, S.NAME, S.EMAIL, S.BIRTHDATE, S.BASESALARY, D.ID, D.NAME "
@@ -58,10 +56,8 @@ public class SellerDaoJDBC implements SellerDao{
 			ps.setInt(1,id);
 			rs = ps.executeQuery();
 			if(rs.next()) {
-			
-				seller = new Seller(rs.getInt("S.ID"), rs.getString("S.NAME"), rs.getString("S.EMAIL"),rs.getDate("S.BIRTHDATE"),
-						rs.getDouble("S.BASESALARY"),
-						new Department(rs.getInt("D.ID"), rs.getString("D.NAME")));
+				Department dep = instantiateDepartment(rs);
+				Seller seller = instantiateSeller(rs, dep);
 				return seller;
 			}	
 			return null;
@@ -81,4 +77,31 @@ public class SellerDaoJDBC implements SellerDao{
 		return null;
 	}
 
+	private Department instantiateDepartment(ResultSet rs) {
+		try {
+			Department department = new Department();
+			department.setId(rs.getInt("D.ID"));
+			department.setName(rs.getString("D.NAME"));
+			return department;
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+	}
+	
+	private Seller instantiateSeller(ResultSet rs, Department department) {
+		try {
+			Seller seller = new Seller();
+			seller.setId(rs.getInt("S.ID"));
+			seller.setName(rs.getString("S.NAME"));
+			seller.setEmail(rs.getString("S.EMAIL"));
+			seller.setBirthDate(rs.getDate("S.BIRTHDATE"));
+			seller.setBaseSalary(rs.getDouble("S.BASESALARy"));
+			seller.setDepartment(department);
+			return seller;
+		}
+		catch(SQLException e) {
+			throw new DbException (e.getMessage());
+		}
+	}
 }
