@@ -24,8 +24,10 @@ public class Seller implements Serializable {
 		//this.department = department;
 	}
 	
-	public Seller(String name) {
+	public Seller(Integer id, String name, String email) {
+		this.id = id;
 		this.name = name;
+		this.email = email;
 	}
 	
 	public Seller() {
@@ -105,6 +107,6 @@ public class Seller implements Serializable {
 	*/
 	@Override
 	public String toString(){
-		return "Name: " + name;
+		return "ID: " + id +  ", Name: " + name + ", Email: " + email;
 	}
 }
