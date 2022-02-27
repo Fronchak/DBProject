@@ -1,12 +1,14 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
 public class Seller implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
 	private Integer id;
 	private String name;
@@ -15,13 +17,13 @@ public class Seller implements Serializable {
 	private Double baseSalary;
 	private Department department;
 	
-	public Seller(Integer id, String name, String email, Date birthDate, Double baseSalary) {
+	public Seller(Integer id, String name, String email,Date birthDate, Double baseSalary, Department department) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.birthDate = birthDate;
 		this.baseSalary = baseSalary;
-		//this.department = department;
+		this.department = department;
 	}
 	
 	public Seller(Integer id, String name, String email) {
@@ -107,6 +109,8 @@ public class Seller implements Serializable {
 	*/
 	@Override
 	public String toString(){
-		return "ID: " + id +  ", Name: " + name + ", Email: " + email;
+		return "ID: " + id +  ", Name: " + name + ", Email: " + email + ", Birth Date: "
+				+ "" + birthDate +  ", "
+				+ department.toString();
 	}
 }

@@ -4,16 +4,22 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import Db.DB;
 import Db.DbException;
 import model.dao.SellerDao;
+import model.entities.Department;
 import model.entities.Seller;
 
 public class SellerDaoJDBC implements SellerDao{
 	
-
+	private Connection conn;
+	
+	public SellerDaoJDBC(Connection conn) {
+		this.conn = conn;
+	}
 	
 	@Override
 	public void insert(Seller obj) {
@@ -36,9 +42,10 @@ public class SellerDaoJDBC implements SellerDao{
 	@Override
 	public Seller findById(Integer id) {
 		
-		Connection conn = null;
 		PreparedStatement ps = null;
+		
 		ResultSet rs = null;
+		
 		Seller seller = null;
 		try {
 			conn = DB.createConnection();
@@ -50,9 +57,14 @@ public class SellerDaoJDBC implements SellerDao{
 			
 			ps.setInt(1,id);
 			rs = ps.executeQuery();
-			while(rs.next()) {
-				seller = new Seller(rs.getInt("S.ID"), rs.getString("S.NAME"), rs.getString("S.EMAIL"));
-			}		
+			if(rs.next()) {
+			
+				seller = new Seller(rs.getInt("S.ID"), rs.getString("S.NAME"), rs.getString("S.EMAIL"),rs.getDate("S.BIRTHDATE"),
+						rs.getDouble("S.BASESALARY"),
+						new Department(rs.getInt("D.ID"), rs.getString("D.NAME")));
+				return seller;
+			}	
+			return null;
 		}
 		catch(SQLException e) {
 			throw new DbException(e.getMessage());
@@ -60,11 +72,7 @@ public class SellerDaoJDBC implements SellerDao{
 		finally {
 			DB.closeResultSet(rs);
 			DB.closePreparedStatement(ps);
-			DB.closeConnection();
-			//return seller;
 		}
-		return seller;
-	
 	}
 
 	@Override
