@@ -39,6 +39,11 @@ public class Program {
 		Seller newSeller = list.get(0);
 		sellerDao.insert(newSeller);
 		System.out.println("newSeller.getId() = " + newSeller.getId());
+		
+		Seller sellerUpdate = sellerDao.findById(5);
+		sellerUpdate.setName("Gabriel Fronchak Gmack");
+		System.out.println("SellerUpdate: " + sellerUpdate);
+		sellerDao.update(sellerUpdate);
 	}
 	
 
