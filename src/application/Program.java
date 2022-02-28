@@ -15,23 +15,28 @@ public class Program {
 		SellerDao sellerDao = DaoFactory.createSellerDao();
 		
 		Seller seller = sellerDao.findById(1);
-		
 		System.out.println("=============TEST SELLER FIND BY ID ======================");
 		System.out.println(seller);
 	
 		DepartmentDao departmentDao = DaoFactory.createDepartmentDao();
 		
 		Department department = departmentDao.findById(15);
-		
+		System.out.println();
 		System.out.println("=============TEST DEPARTMENT FIND BY ID ==================");
 		System.out.println(department);
-		
+		System.out.println();
 		System.out.println("==============TEST FIND BY DEPARTMENT =====================");
 		
 		List<Seller> list = sellerDao.findByDepartment(seller.getDepartment());	
 		for(Seller sellerAux : list) {
 			System.out.println(sellerAux);
 		}
+		System.out.println();
+		System.out.println("==============TEST FIND BY DEPARTMENT =====================");
+		for(Seller sellerAux2 : sellerDao.findAll()) {
+			System.out.println(sellerAux2);
+		}
+		
 	}
 	
 
