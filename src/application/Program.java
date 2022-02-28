@@ -36,7 +36,9 @@ public class Program {
 		for(Seller sellerAux2 : sellerDao.findAll()) {
 			System.out.println(sellerAux2);
 		}
-		
+		Seller newSeller = list.get(0);
+		sellerDao.insert(newSeller);
+		System.out.println("newSeller.getId() = " + newSeller.getId());
 	}
 	
 
