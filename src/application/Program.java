@@ -44,6 +44,7 @@ public class Program {
 		sellerUpdate.setName("Gabriel Fronchak Gmack");
 		System.out.println("SellerUpdate: " + sellerUpdate);
 		sellerDao.update(sellerUpdate);
+		sellerDao.deleteById(9);
 	}
 	
 
